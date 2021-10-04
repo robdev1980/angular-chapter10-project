@@ -13,8 +13,16 @@ export class ShoppingListService {
     return this.ingredients.slice();
   }
 
-  addIngredient(ingredient: Ingredient) {
+  addIngredient(ingredient: Ingredient, commit: boolean = true) {
     this.ingredients.push(ingredient);
+    if(commit) {
+      this.ingredientsChanged.emit(this.ingredients.slice()); 
+    }
+  }
+  addIngredients(ingredients: Ingredient[]) {
+    for (let ingredient of ingredients) {
+      this.addIngredient(ingredient, false);
+    }
     this.ingredientsChanged.emit(this.ingredients.slice()); 
   }
 }
